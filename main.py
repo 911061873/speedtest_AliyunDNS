@@ -2,13 +2,11 @@
 # coding=utf-8
 import json
 import os
+import speedtest
 import time
-
 from aliyunsdkalidns.request.v20150109.UpdateDomainRecordRequest import UpdateDomainRecordRequest
 from aliyunsdkcore.client import AcsClient
 from retrying import retry
-
-import speedtest
 
 default_config = {
     'test': {
@@ -58,23 +56,18 @@ def update_config(conf):
 
 def new_print(old_print):
     def inner(*args, **kwargs):
+        colors = {
+            '红': '31',
+            '绿': '32',
+            '黄': '33',
+            '蓝': '34',
+            '紫': '35',
+            '青': '36',
+            '白': '37',
+        }
         if 'color' in kwargs:
-            color = kwargs['color']
-            del kwargs['color']
-            if color == '红':
-                color = '31'
-            elif color == '绿':
-                color = '32'
-            elif color == '黄':
-                color = '33'
-            elif color == '蓝':
-                color = '34'
-            elif color == '紫':
-                color = '35'
-            elif color == '青':
-                color = '36'
-            elif color == '白':
-                color = '37'
+            if kwargs['color'] in colors:
+                color = colors[kwargs['color']]
             else:
                 color = '38'
         else:
