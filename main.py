@@ -2,11 +2,14 @@
 # coding=utf-8
 import json
 import os
-import speedtest
+import sys
 import time
+
 from aliyunsdkalidns.request.v20150109.UpdateDomainRecordRequest import UpdateDomainRecordRequest
 from aliyunsdkcore.client import AcsClient
 from retrying import retry
+
+import speedtest
 
 default_config = {
     'test': {
@@ -88,7 +91,9 @@ def retry_if_timeout(exception):
 
 
 @retry(stop_max_attempt_number=3, wait_fixed=5000)
-def test(download, upload, servers=[], threads=None):
+def test(download, upload, servers=None, threads=None):
+    if servers is None:
+        servers = []
     s.get_servers(servers)
     s.get_best_server()
     if download:
@@ -207,4 +212,13 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if sys.argv[0]:
+        argv = sys.argv[0]
+        if argv == '--help' or '-help':
+            print('--makeconfig\t生成配置文件')
+        elif argv == '--makeconfig':
+            update_config(default_config)
+        else:
+            print('--makeconfig\t生成配置文件')
+    else:
+        main()

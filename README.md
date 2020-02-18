@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/911061873/speedtest_AliyunDNS.svg?branch=master)](https://travis-ci.org/911061873/speedtest_AliyunDNS)
 
 这是一个自动检测网速，并判断是否切换到备用线路的脚本。
-首次运行会在目录下生成config.json
+首次运行会在目录下生成config.json，也可从过参数`--makeconfig`创建配置文件。
 ## 配置
 ```
 {
